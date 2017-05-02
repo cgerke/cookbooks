@@ -11,7 +11,7 @@ resource_name :cpe_desktop
 default_action :run
 
 action :run do
-  # Node is nil... don't manage
+  # Node is nil? ...don't manage. Allows user to override.
   return if node['cpe_desktop'].nil?
   # Profile
   prefix = node['cpe_profiles']['prefix']

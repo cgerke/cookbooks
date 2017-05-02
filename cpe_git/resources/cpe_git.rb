@@ -11,11 +11,12 @@ resource_name :cpe_git
 default_action :run
 
 action :run do
+  # Won't run at loginwindow
   console_user = node.console_user()
-  # Node attr is nil... don't manage
+  return if console_user == 'root'
+  # Node(s) nil? ...don't manage. Allows user to override.
   return if node['cpe_git']['email'].nil? ||
             node['cpe_git']['name'].nil?
-  return if console_user == 'root'
   # Home
   console_home = '/Users/' + console_user
   # Templates

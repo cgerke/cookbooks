@@ -11,7 +11,7 @@ resource_name :cpe_ssh
 default_action :run
 
 action :run do
-  console_user = node.console_user()
+  # Node is false? ...don't manage. Allows user to override.
   return unless node['cpe_ssh']['config']
   # LaunchDaemon
   ssh = node['cpe_ssh']['setremotelogin'] ?
@@ -41,14 +41,14 @@ action :run do
       end
     end
   end
-  # MOTD
+  # MOTD node is nil? ...don't manage. Allows user to override.
   message_of_the_day = node['cpe_ssh']['motd']
   file '/etc/motd' do
     content message_of_the_day + "\r\n"
     mode '0644'
     not_if { message_of_the_day.nil? }
   end
-  # sshrc
+  # sshrc node is nil? ...don't manage. Allows user to override.
   ssh_alert = node['cpe_ssh']['email']
   template '/etc/ssh/sshrc' do
     source 'sshrc.erb'
@@ -57,7 +57,8 @@ action :run do
     mode '0644'
     not_if { ssh_alert.nil? }
   end
-  # NOT root
+  # Won't run at loginwindow
+  console_user = node.console_user()
   return if console_user == 'root'
   # Home
   console_home = '/Users/' + console_user
@@ -67,7 +68,7 @@ action :run do
     mode '0700'
     owner console_user
   end
-  # authorized_keys
+  # authorized_keys node is empty? ...don't manage. Allows user to override.
   authorized_keys = node['cpe_ssh']['authorized']
   template "#{console_home}/.ssh/authorized_keys" do
     action :create
@@ -75,9 +76,9 @@ action :run do
     mode '0600'
     owner console_user
     variables(:authorized_keys => authorized_keys)
-    not_if { authorized_keys.nil? }
+    not_if { authorized_keys.to_s.empty? }
   end
-  # config
+  # config node is nil? ...don't manage. Allows user to override.
   ssh_config = node['cpe_ssh']['ssh_config']
   template "#{console_home}/.ssh/config" do
     action :create

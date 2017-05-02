@@ -11,7 +11,7 @@ resource_name :cpe_chef
 default_action :run
 
 action :run do
-  console_user = node.console_user()
+  # Node is false? ...don't manage. Allows user to override.
   return unless node['cpe_chef']['config']
   # Prefix
   prefix = node['cpe_profiles']['prefix']
@@ -35,6 +35,7 @@ action :run do
   }
   # LaunchAgent
   # Chef in a console session as the user
+  # This needs work, timing, sleep 60 ...I dont like it.
   node.default['cpe_launchd']["#{prefix}.chef.gui"] = {
     'program_arguments' => [
       '/bin/sh',
@@ -62,7 +63,8 @@ action :run do
     'run_at_load' => true,
     'standard_out_path' => '/var/log/chef-login.log',
   }
-  # NOT root
+  # Won't run at loginwindow
+  console_user = node.console_user()
   return if console_user == 'root'
   console_home = '/Users/' + console_user
   # .chef
@@ -72,6 +74,7 @@ action :run do
     owner console_user
   end
   # Templates knife
+  # This isn't for production, for dev environments.
   return unless node['cpe_chef']['knife']
   chef_templates = [
     'knife.rb',

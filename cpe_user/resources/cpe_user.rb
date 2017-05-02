@@ -12,6 +12,7 @@ default_action :run
 
 action :run do
   node_usernames = []
+  # Node is nil? ...don't manage. Allows user to override.
   return if node['cpe_user'].nil?
   node['cpe_user'].each do |user_name, _k|
     cpe_admin = node['cpe_user'][user_name]['admin'] == 1 ? 'a' : 'd'

@@ -11,9 +11,11 @@ resource_name :cpe_aliases
 default_action :run
 
 action :run do
+  # Won't run at loginwindow
   console_user = node.console_user()
-  return if node['cpe_aliases'].to_s.empty?
   return if console_user == 'root'
+  # Node is false? ...don't manage. Allows user to override.
+  return if node['cpe_aliases'].to_s.empty?
   # Touch ~/.aliases
   ALIAS_FILE = '/Users/' + console_user + '/.aliases'
   unless ::File.exist?(ALIAS_FILE)

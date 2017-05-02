@@ -11,6 +11,7 @@ resource_name :cpe_remotedesktop
 default_action :run
 
 action :run do
+  # Node is false? ...don't manage. Allows user to override.
   return unless node['cpe_remotedesktop']['config']
   # binary
   kickstart = ::File.join(
@@ -25,7 +26,7 @@ action :run do
   )
   # Options
   options = node['cpe_remotedesktop']['options'].join(' ')
-  # Node attr is nil... abort
+  # Node is nil? ...don't manage. Allows user to override.
   return if options.to_s.nil?
   # LaunchDaemon
   prefix = node['cpe_profiles']['prefix']

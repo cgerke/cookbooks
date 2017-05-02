@@ -12,6 +12,7 @@ resource_name :cpe_preferencepanes
 default_action :run
 
 action :run do
+  # Node is empty? ...don't manage. Allows user to override.
   prefs = node['cpe_preferencepanes'].reject { |_k, v| v.nil? }
   return if prefs.empty?
   prefix = node['cpe_profiles']['prefix']

@@ -11,6 +11,7 @@ resource_name :cpe_postfix
 default_action :run
 
 action :run do
+  # Node is empty? ...don't manage. Allows user to override.
   prefs = node['cpe_postfix'].reject { |_k, v| v.nil? }
   return if prefs.empty?
   # Templates

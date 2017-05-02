@@ -11,9 +11,11 @@ resource_name :cpe_vim
 default_action :run
 
 action :run do
+  # Won't run at loginwindow
   console_user = node.console_user()
-  return unless node['cpe_vim']
   return if console_user == 'root'
+  # Node is false? ...don't manage. Allows user to override.
+  return unless node['cpe_vim']
   # Home
   console_home = '/Users/' + console_user
   # ~/.vim

@@ -11,6 +11,7 @@ resource_name :cpe_appaccess
 default_action :config
 
 action :config do
+  # Node is empty? ...don't manage. Allows user to override.
   prefs = node['cpe_appaccess'].reject { |_k, v| v.nil? }
   return if prefs.empty?
   prefix = node['cpe_profiles']['prefix']
