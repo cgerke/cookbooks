@@ -1,0 +1,7 @@
+# Chef Managed
+<% @config_arrays.each do |k, v| -%>
+<%= 'Host ' + k['Host'] unless k['Host'].nil? %>
+<%= ' HostName ' + k['HostName'] unless k['HostName'].nil? %>
+<%= ' IdentityFile ' + k['IdentityFile'] unless k['IdentityFile'].nil? %>
+<%= ' User ' + k['User'] unless k['User'].nil? %>
+<% end -%>

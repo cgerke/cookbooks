@@ -1,0 +1,4 @@
+# Chef Managed
+
+/usr/bin/printf "$(date)\n$SSH_CONNECTION" | \
+  mail -s "🔓   ssh login $USER@$(hostname)" "<%= node['cpe_ssh']['email'] %>"
