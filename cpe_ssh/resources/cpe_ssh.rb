@@ -11,6 +11,7 @@ resource_name :cpe_ssh
 default_action :run
 
 action :run do
+  console_user = node.console_user()
   return unless node['cpe_ssh']['config']
   # LaunchDaemon
   ssh = node['cpe_ssh']['setremotelogin'] ?
@@ -86,13 +87,4 @@ action :run do
     variables(:config_arrays => ssh_config)
     not_if { ssh_config.nil? }
   end
-end
-
-# FC019 Remove this once you figure out bracket notation for method calls
-def console_user
-  usercmd = Mixlib::ShellOut.new(
-    '/usr/bin/stat -f%Su /dev/console',
-  ).run_command.stdout
-  username = usercmd.chomp
-  username
 end

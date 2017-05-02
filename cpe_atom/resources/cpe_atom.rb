@@ -11,6 +11,7 @@ resource_name :cpe_atom
 default_action :run
 
 action :run do
+  console_user = node.console_user()
   return unless node['cpe_atom']['config']
   return if console_user == 'root'
   # Home
@@ -67,7 +68,7 @@ action :run do
   # Download
   return unless node['cpe_atom']['download']
   bash 'atom app' do
-  code <<-EOH
+    code <<-EOH
     named_pipe=/tmp/hpipe
     mkfifo $named_pipe
     # Cocoa
@@ -87,15 +88,6 @@ action :run do
     # turn off the progress bar by closing file descriptor 3
     exec 3>&-
     EOH
-  not_if { ::File.exist?("/Applications/Atom.app") }
+    not_if { ::File.exist?('/Applications/Atom.app') }
   end
-end
-
-# FC019 Remove this once you figure out bracket notation for method calls
-def console_user
-  usercmd = Mixlib::ShellOut.new(
-    '/usr/bin/stat -f%Su /dev/console',
-  ).run_command.stdout
-  username = usercmd.chomp
-  username
 end
