@@ -13,6 +13,8 @@ Attributes
 
 Usage
 -----
+```ruby
   # Creates a LaunchDaemon that enables chef on an interval
   node.default['cpe_chef']['config'] = true
   node.default['cpe_chef']['interval'] = 1800
+```
