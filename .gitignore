@@ -19,6 +19,7 @@ cpe_chef/templates/*
 !cpe_git
 cpe_git/templates/*
 !cpe_locale
+!cpe_newsyslog
 !cpe_postfix
 !cpe_preferencepanes
 !cpe_remotedesktop
