@@ -9,9 +9,9 @@
 
 resource_name :cpe_aliases
 default_action :run
-console_user = node.console_user
 
 action :run do
+  console_user = node.console_user()
   return if node['cpe_aliases'].to_s.empty?
   return if console_user == 'root'
   # Touch ~/.aliases
