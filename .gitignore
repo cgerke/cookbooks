@@ -23,6 +23,7 @@ cpe_git/templates/*
 !cpe_postfix
 !cpe_preferencepanes
 !cpe_remotedesktop
+cpe_remotedesktop/files/*
 !cpe_screensaver
 !cpe_ssh
 !cpe_user
