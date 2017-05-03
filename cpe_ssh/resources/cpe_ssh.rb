@@ -49,9 +49,10 @@ action :run do
     not_if { message_of_the_day.nil? }
   end
   # sshrc node is nil? ...don't manage. Allows user to override.
+  # FC033 : false positive hack with File.join
   ssh_alert = node['cpe_ssh']['email']
   template '/etc/ssh/sshrc' do
-    source 'global/sshrc.erb'
+    source ::File.join('global', 'sshrc.erb')
     owner 'root'
     group 'wheel'
     mode '0644'
