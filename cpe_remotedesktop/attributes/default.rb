@@ -7,6 +7,7 @@
 # chris.gerke@gmail.com
 #
 
+default['cpe_remotedesktop']['admin'] = false
 default['cpe_remotedesktop']['config'] = false
 default['cpe_remotedesktop']['interval'] = 3600
 default['cpe_remotedesktop']['options'] = [

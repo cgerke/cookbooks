@@ -39,4 +39,26 @@ action :run do
     'run_at_load' => true,
     'start_interval' => node['cpe_remotedesktop']['interval'],
   }
+  # Cache
+  directory '/opt/ard' do
+    mode '0755'
+    owner 'root'
+    group 'wheel'
+  end
+  # ARD resource
+  return unless node['cpe_remotedesktop']['admin']
+  cookbook_file '/opt/ard/Remote Desktop.zip' do
+    source 'Remote Desktop.zip'
+    owner 'root'
+    group 'admin'
+    mode '0755'
+    notifies :run, 'execute[ard_install]', :delayed
+    not_if { ::File.exist?('/Applications/Remote Desktop.app') }
+    action :create
+  end
+  # ARD Install
+  execute 'ard_install' do
+    command '/usr/bin/unzip /opt/ard/Remote\ Desktop.zip -d /Applications/'
+    action :nothing
+  end
 end
