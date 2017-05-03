@@ -19,3 +19,7 @@ Usage
   node.default['cpe_aliases']['fgrep'] = '"fgrep --color=auto"'
   node.default['cpe_aliases']['grep'] = '"grep --color=auto"'
 ```
+
+Notes
+----------
+Thinking about persistent aliases via /etc/profile.d/
