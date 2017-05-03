@@ -31,14 +31,14 @@ action :run do
   end
   # Install
   execute 'cocoadialog_install' do
-    command '/usr/bin/unzip /opt/cocoadialog/cocoadialog.zip -d /Applications/Utilities/'
+    command 'unzip /opt/cocoadialog/cocoadialog.zip -d /Applications/Utilities/'
     action :nothing
   end
   # Binary
-  template "/usr/local/bin/cocoadialog" do
+  template '/usr/local/bin/cocoadialog' do
     action :create
     cookbook 'cpe_cocoadialog'
-    source "cocoadialog"
+    source 'cocoadialog'
     owner 'root'
     mode '0755'
   end

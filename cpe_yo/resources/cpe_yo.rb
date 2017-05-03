@@ -31,14 +31,14 @@ action :run do
   end
   # Install
   execute 'yo_install' do
-    command '/usr/bin/unzip /opt/yo/yo.zip -d /Applications/Utilities/'
+    command 'unzip /opt/yo/yo.zip -d /Applications/Utilities/'
     action :nothing
   end
   # Binary
-  template "/usr/local/bin/yo" do
+  template '/usr/local/bin/yo' do
     action :create
     cookbook 'cpe_yo'
-    source "yo"
+    source 'yo'
     owner 'root'
     mode '0755'
   end
