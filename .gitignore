@@ -14,6 +14,8 @@ cpe_atom/templates/*
 cpe_bash/templates/*
 !cpe_chef
 cpe_chef/templates/*
+!cpe_cocoadialog
+cpe_cocoadialog/files/*
 !cpe_desktop
 !cpe_gatekeeper
 !cpe_git
@@ -31,4 +33,6 @@ cpe_ssh/templates/*
 !cpe_user
 !cpe_vim
 cpe_vim/templates/*
+!cpe_yo
+cpe_yo/files/*
 !tests
