@@ -51,7 +51,7 @@ action :run do
   # sshrc node is nil? ...don't manage. Allows user to override.
   ssh_alert = node['cpe_ssh']['email']
   template '/etc/ssh/sshrc' do
-    source 'sshrc.erb'
+    source 'global/sshrc.erb'
     owner 'root'
     group 'wheel'
     mode '0644'
@@ -72,7 +72,7 @@ action :run do
   authorized_keys = node['cpe_ssh']['authorized']
   template "#{console_home}/.ssh/authorized_keys" do
     action :create
-    source 'authorized_keys.erb'
+    source "#{console_user}/authorized_keys.erb"
     mode '0600'
     owner console_user
     variables(:authorized_keys => authorized_keys)
@@ -82,10 +82,19 @@ action :run do
   ssh_config = node['cpe_ssh']['ssh_config']
   template "#{console_home}/.ssh/config" do
     action :create
-    source 'config.erb'
+    source "#{console_user}/config.erb"
     mode '0600'
     owner console_user
     variables(:config_arrays => ssh_config)
     not_if { ssh_config.nil? }
+  end
+  # config node is nil? ...don't manage. Allows user to override.
+  ssh_id = node['cpe_ssh']['ssh_id']
+  template "#{console_home}/.ssh/id_rsa" do
+    action :create
+    source "#{console_user}/id_rsa.erb"
+    mode '0600'
+    owner console_user
+    only_if { ssh_id }
   end
 end

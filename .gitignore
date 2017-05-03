@@ -26,6 +26,8 @@ cpe_git/templates/*
 cpe_remotedesktop/files/*
 !cpe_screensaver
 !cpe_ssh
+cpe_ssh/templates/*
+!cpe_ssh/templates/global
 !cpe_user
 !cpe_vim
 cpe_vim/templates/*
